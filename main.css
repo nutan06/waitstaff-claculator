@@ -1,0 +1,25 @@
+body{
+	font-family: 'Noto Sans', sans-serif;
+}
+.heading{
+	color:#ffffff;
+	background-color:#F09D4E;
+	padding:0.25em;
+	text-align:center;
+	  border: 1px solid #eea236;
+  border-radius: 10px;
+}
+#section,#section2{
+	margin-top:5em;
+	border-radius:5px;
+	padding:2em;
+	margin-left:2em;
+	background-color:#E1E0CE;
+	box-shadow: 5px 5px 5px #888;
+}
+#section{
+	text-align:right;
+}
+.reset{
+	margin-top:2em;
+}
