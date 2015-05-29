@@ -23,3 +23,22 @@ body{
 .reset{
 	margin-top:2em;
 }
+.navitab{
+	height:5em;
+	font-family: 'Noto Sans', sans-serif;
+	font-size:2em;
+	margin-top: 1.5em;
+	/*color:#F09D4E;*/
+}
+li{
+	list-style: none;
+	display: inline;
+	padding:1em;
+}
+a:link, a:visited{
+	color:#F09D4E;
+}
+footer{
+	text-align:center;
+	padding:2em;
+}

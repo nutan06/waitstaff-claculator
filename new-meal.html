@@ -1,0 +1,30 @@
+<div class="container">
+		
+			<h1 class="heading">Waitstaff Calculator</h1>
+		
+		<div class="row">
+			<div id="section" class="col-md-6">
+				<h2 class="heading">Enter the Meal Details</h2>
+				<form name="mealData" ng-submit="calculate()">
+					<div class="form-group">
+						<h3>Base meal price : $ <input class="form-input" type="number" placeholder="Base meal price " ng-model="price" required/></h3>
+					</div>
+					<div class="form-group">
+						<h3>Tax rate : % <input class="form-input" type="number" placeholder="Enter the tax rate in %" ng-model="tax_p" required/></h3>
+					</div>
+					<div class="form-group">
+						<h3>Tip : % <input class="form-input" type="number" placeholder="Enter the tip in %" ng-model="tip_p" required/></h3>
+					</div>
+					<input class="btn btn-warning" type="submit" value="Submit" submitted="true;">
+					<input class="btn btn-warning" type="button" value="Update" ng-click="update()">
+				</form>
+			</div>
+			<div id="section2" class="col-md-6">
+					<h2 class="heading">Customer Charges</h2>
+					<h3>Subtotal:{{subtotal|currency}}</h3>
+					<h3>Tip:{{tip|currency}}</h3>
+					<hr>
+					<h3>Total:{{total|currency}}</h3>
+				</div>
+			</div>
+</div>

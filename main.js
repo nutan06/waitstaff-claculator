@@ -1,53 +1,83 @@
-var myApp=angular.module('waitStaff',[])
-myApp.controller('calculatorController',function($scope){
+var myApp=angular.module('waitStaff',['ngRoute']);
 
-	var init=function(){
-		$scope.Data={};
-		$scope.charges={};
-		$scope.earning={};
+myApp.config(['$routeProvider',function($routeProvider){
+	$routeProvider
+	.when('/detail',{
+		templateUrl:'./detail.html',
+		controller:'detailsCtrl'
+	})
+	.when('/new-meal',{
+		templateUrl:'./new-meal.html',
+		controller:'mealCtrl'
+	})
+	.when('/my-earning',{
+		templateUrl:'./my-earning.html',
+		controller:'mealCtrl'
+	})
+	.when('/error', {
+		      template : '<p>Error Page Not Found</p>'
+		});
+}])
 
-		$scope.charges.subTotal=0;
-		$scope.charges.tip=0;
-		$scope.charges.total=0;
-
-		$scope.earning.totalTip=0;
-		$scope.earning.mealCount=0;
-		$scope.earning.avgTip=0;
-		$scope.submitted=false;
-	};
-
-	init();
-
-	var calculate=function(){
-		/*--Calculations for charges--*/
-		$scope.charges.subTotal=($scope.Data.price * (1 + $scope.Data.tax/100));
-		$scope.charges.tip=(($scope.charges.subTotal)* ($scope.Data.tip/100));
-		$scope.charges.total=$scope.charges.subTotal+$scope.charges.tip;
-
-		/*--Calculations for total earnings--*/
-		$scope.earning.totalTip+=$scope.charges.tip;
-		$scope.earning.mealCount++;
-		$scope.earning.avgTip=$scope.earning.totalTip/$scope.earning.mealCount;
-	};
-
-	$scope.validate=function(){
-		if($scope.mealData.$valid){
-			calculate();
+.factory('info', function(){
+		return {
+			data: {
+				price: 0,
+				tax_p: 0,
+				tip_p: 0,
+				count: 0,
+				tip_total: 0,
+				subtotal: 0,
+				tip: 0,
+				avg: 0,
+				total:0
+			}
 		}
-	}
-	$scope.clear=function(){
-		$scope.Data={};
-		$scope.charges.subTotal=0;
-		$scope.charges.tip=0;
-		$scope.charges.total=0;
-	}
-	$scope.reset=function(){
-		$scope.Data={};
-		$scope.charges.subTotal=0;
-		$scope.charges.tip=0;
-		$scope.charges.total=0;
-		$scope.earning.totalTip=0;
-		$scope.earning.mealCount=0;
-		$scope.earning.avgTip=0;
-	}
+	})
+	.controller('detailsCtrl',function($scope){
+
+})
+	.controller('mealCtrl', function($scope, $route, info, $location){
+
+		$scope.tip = info.data.tip;
+		$scope.subtotal = info.data.subtotal;
+		$scope.total = info.data.total;
+
+		$scope.tip_total = info.data.tip_total;
+		$scope.count = info.data.count;
+		$scope.avg = info.data.avg;
+		
+		$scope.calculate = function() {   
+
+			info.data.tip = $scope.price * $scope.tip_p * 0.01;
+			info.data.subtotal = $scope.price * $scope.tax_p * 0.01 + $scope.price; 
+		    info.data.total = info.data.tip + info.data.subtotal
+
+		    info.data.tip_total = info.data.tip_total + info.data.tip;
+		    info.data.count ++;
+		    info.data.avg = info.data.tip_total / info.data.count; 
+
+		    $location.path('new-meal');
+		    $route.reload();
+
+	    }
+
+	    $scope.reset = function(){
+	    	info.data.tip=0;
+	    	info.data.subtotal=0;
+	    	info.data.total=0;
+			info.data.count = 0;
+			info.data.tip_total = 0;
+			info.data.avg = 0;
+			this.update();
+		}
+
+		$scope.update = function(){
+			$scope.tip = info.data.tip;
+			$scope.subtotal = info.data.subtotal;
+			$scope.total = info.data.total;
+			$scope.tip_total = info.data.tip_total;
+			$scope.count = info.data.count;
+			$scope.avg = info.data.avg;
+		}
 });
